@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 
 const dev = process.env.NODE_ENV !== 'production';
 const app = next({ dev });
+const port = process.env.PORT || 4000;
 
 const handle = app.getRequestHandler();
 
@@ -21,7 +22,7 @@ app.prepare().then(() => {
     return handle(req, res)
   });
 
-  server.listen(3000, err => {
+  server.listen(port, err => {
     if (err) throw err;
     console.log('> Ready on http://localhost:3000')
   })
