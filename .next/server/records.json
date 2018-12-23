@@ -1,0 +1,57 @@
+{
+  "modules": {
+    "byIdentifier": {
+      "external \"react\"": 0,
+      "external \"@babel/runtime/regenerator\"": 1,
+      "multi ./pages/index.js": 2,
+      "node_modules/ignore-loader/index.js!pages/home.styl": 3,
+      "external \"isomorphic-unfetch\"": 4,
+      "node_modules/ignore-loader/index.js!components/LiablilityItem/style.styl": 5,
+      "node_modules/ignore-loader/index.js!components/Message/style.styl": 6,
+      "multi node_modules/next/dist/pages/_app.js": 7,
+      "node_modules/next/dist/pages/_app.js": 8,
+      "external \"next/app\"": 9,
+      "multi node_modules/next/dist/pages/_error.js": 10,
+      "node_modules/next/dist/pages/_error.js": 11,
+      "external \"next/error\"": 12,
+      "multi node_modules/next/dist/pages/_document.js": 13,
+      "node_modules/next/dist/pages/_document.js": 14,
+      "external \"next/document\"": 15,
+      "node_modules/next/dist/build/webpack/loaders/next-babel-loader.js??ref--4!pages/index.js 0aa0b9bada859541da1690e139677a9d": 16
+    },
+    "usedIds": {
+      "0": 0,
+      "1": 1,
+      "2": 2,
+      "3": 3,
+      "4": 4,
+      "5": 5,
+      "6": 6,
+      "7": 7,
+      "8": 8,
+      "9": 9,
+      "10": 10,
+      "11": 11,
+      "12": 12,
+      "13": 13,
+      "14": 14,
+      "15": 15,
+      "16": 16
+    }
+  },
+  "chunks": {
+    "byName": {
+      "static/R~8ADd~W1IWdjll1BbqB3/pages/index.js": 0,
+      "static/R~8ADd~W1IWdjll1BbqB3/pages/_app.js": 1,
+      "static/R~8ADd~W1IWdjll1BbqB3/pages/_error.js": 2,
+      "static/R~8ADd~W1IWdjll1BbqB3/pages/_document.js": 3
+    },
+    "bySource": {},
+    "usedIds": [
+      0,
+      1,
+      2,
+      3
+    ]
+  }
+}

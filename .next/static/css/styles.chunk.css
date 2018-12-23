@@ -1,0 +1,22 @@
+.home-page-container {
+  color: #f00;
+}
+
+.liability-item {
+  display: flex;
+}
+
+.message {
+  border-width: 1px;
+  border-style: solid;
+  padding: 10px;
+}
+.message.error {
+  border-color: #f00;
+}
+.message.info {
+  border-color: #008000;
+}
+
+
+/*# sourceMappingURL=styles.chunk.css.map*/
