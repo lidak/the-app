@@ -1,23 +1,27 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
-import './style.styl'
+import './style.styl';
 
 export default class Message extends Component {
-  constructor() {
+  constructor () {
     super();
     this.state = {
       lastShown: new Date()
-    }
+    };
   }
-  componentWillReceiveProps(nextProps, nextContext) {
-    if(nextProps.message != this.props.message ||
-      nextProps.type != this.props.type
+
+  componentDidUpdate (prevProps, prevState, snapshot) {
+    if (prevProps.message !== this.props.message ||
+        prevProps.type !== this.props.type
     ) {
-      this.state.lastShown = new Date();
+      this.setState({
+        lastShown: new Date()
+      });
     }
   }
 
-  render() {
+  render () {
     const {
       type = 'info',
       message,
@@ -37,4 +41,10 @@ export default class Message extends Component {
       </div>
     );
   }
+}
+
+Message.propTypes = {
+  type: PropTypes.string,
+  message: PropTypes.string.isRequired,
+  hideAfter: PropTypes.number
 }

@@ -1,7 +1,6 @@
 const router = require('express').Router();
-const userDB = require('./userDB');
-const db = new userDB();
-
+const UserCollectionCommunicator = require('./userCollectionDBCommunicator');
+const db = new UserCollectionCommunicator();
 
 router.post('/sign-up', (req, res, next) => {
   const {
@@ -13,11 +12,11 @@ router.post('/sign-up', (req, res, next) => {
     name,
     password
   })
-    .then(() => res.json({status: 'OK'}))
+    .then(() => res.json({ status: 'OK' }))
     .catch((err) => {
       console.log(err)
-      if(err === `Username ${name} is already taken`) {
-        res.status(400).send({ error: err});
+      if (err === `Username ${name} is already taken`) {
+        res.status(400).send({ error: err });
       } else {
         next(err);
       }
@@ -34,10 +33,10 @@ router.post('/sign-in', (req, res, next) => {
     name,
     password
   })
-    .then((userId) => res.json({userId}))
+    .then((userId) => res.json({ userId }))
     .catch((err) => {
-      if(err === `Username ${name} does not exist.` || 'The password is wrong') {
-        res.status(400).send({ error: err});
+      if (err === `Username ${name} does not exist.` || 'The password is wrong') {
+        res.status(400).send({ error: err });
       } else {
         next(err);
       }

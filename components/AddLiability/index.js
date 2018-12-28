@@ -1,14 +1,12 @@
-import {Component} from 'react';
+import React, { Component } from 'react';
 
-import Auth from './Auth';
-
-export default class AddLiability extends Component {
-  constructor() {
+export default class Index extends Component {
+  constructor () {
     super();
     this.state = {
       title: '',
       amount: 0
-    }
+    };
   }
 
   changeTitle = (e) => {
@@ -24,7 +22,7 @@ export default class AddLiability extends Component {
   }
 
   addClicked = () => {
-    const {save} = this.props;
+    const { save } = this.props;
     const {
       title,
       amount
@@ -36,7 +34,7 @@ export default class AddLiability extends Component {
     });
   }
 
-  render() {
+  render () {
     const {
       title,
       amount
@@ -55,8 +53,7 @@ export default class AddLiability extends Component {
           value={amount}
           onChange={this.changeAmount}
         />
-        <Auth />
       </div>
-    )
+    );
   }
 }

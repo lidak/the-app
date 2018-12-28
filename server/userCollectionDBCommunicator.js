@@ -1,26 +1,27 @@
-const MongoClient 	= require('mongodb').MongoClient;
-
+const MongoClient = require('mongodb').MongoClient;
+const config = require('../config/development');
 
 module.exports = class UsersDB {
-  constructor() {
-    this.url = 'mongodb://admin:33_Korovi@ds027483.mlab.com:27483/liabilities';
-    MongoClient.connect(this.url, {
+  constructor () {
+    MongoClient.connect(config.dbUrl, {
       useNewUrlParser: true
     }, (e, client) => {
-      if (e){
+      if (e) {
         console.log(e);
-      }	else{
+      } else {
         this.db = client.db();
         this.accounts = this.db.collection('users');
-        // index fields 'user' & 'email' for faster new account validation //
-        this.accounts.createIndex({user: 1, email: 1});
-        console.log('mongo :: connected to database');
+        this.accounts.createIndex({
+          user: 1,
+          email: 1
+        });
       }
-    })
+    });
   }
 
-  async create(userParam) {
+  async create (userParam) {
     const { name } = userParam;
+
     if (await this.accounts.findOne({ name })) {
       throw `Username ${name} is already taken`;
     }
@@ -28,7 +29,7 @@ module.exports = class UsersDB {
     await this.accounts.insertOne(userParam);
   }
 
-  async getUserId(userParam) {
+  async getUserId (userParam) {
     const {
       name,
       password

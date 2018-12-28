@@ -1,29 +1,30 @@
 import './home.styl';
 import React, { Component } from 'react';
-import 'isomorphic-unfetch'
+import 'isomorphic-unfetch';
 
-import LiabilityItem from '../components/LiablilityItem'
-import AddLiability from '../components/AddLiability';
+import LiabilityItem from '../components/LiablilityItem';
+import Index from '../components/AddLiability';
+import Layout from '../components/Layout';
 
 export default class HomePage extends Component {
-  constructor() {
+  constructor () {
     super();
     this.state = {
       liabilities: []
-    }
+    };
   }
 
-  addLiability = ({title, amount}) => {
+  addLiability = ({ title, amount }) => {
     const {
       liabilities
     } = this.state;
 
-    liabilities.push({title, amount});
+    liabilities.push({ title, amount });
 
-    this.setState({liabilities});
+    this.setState({ liabilities });
   }
 
-  removeLiability(title) {
+  removeLiability (title) {
     const liabilityToRemoveIndex = this.state.liabilities.indexOf(
       this.state.liabilities.find(item => item.title === title)
     );
@@ -35,28 +36,24 @@ export default class HomePage extends Component {
     });
   }
 
-
-  render() {
+  render () {
     const {
       liabilities
     } = this.state;
 
-    const {
-      hello
-    } = this.props;
-
-    return(
-      <div className="home-page-container">
+    return (
+      <Layout>
         {
           liabilities && !!liabilities.length &&
           <ul>
             {
-              liabilities.map(({title, amount}) => {
+              liabilities.map(({ title, amount }) => {
                 return (
                   <LiabilityItem
                     title={title}
                     amount={amount}
                     removeClicked={this.removeLiability.bind(this)}
+                    key={title}
                   />
                 );
               })
@@ -64,11 +61,13 @@ export default class HomePage extends Component {
           </ul>
         }
         {
-          !liabilities.length && <div>You must be a happy person. You don't have any liabilities.</div>
+          !liabilities.length &&
+          <div>
+            You must be a happy person. You don't have any liabilities.
+          </div>
         }
-        {hello}
-        <AddLiability save={this.addLiability} />
-      </div>
+        <Index save={this.addLiability} />
+      </Layout>
     );
   }
 }
