@@ -3,10 +3,12 @@ import PropTypes from 'prop-types';
 
 import AuthForm from '../../../AuthForm';
 import { connect } from 'react-redux';
+import { Button } from 'react-materialize';
+import { logOut } from '../../../../actions/actionCreators';
 
 class Header extends Component {
   render () {
-    const { user } = this.props;
+    const { user, logOut } = this.props;
 
     return (
       <header>
@@ -15,7 +17,11 @@ class Header extends Component {
           <AuthForm/>
         }
         {
-          !!user.name && `Welcome ${user.name}!`
+          !!user.name &&
+          <>
+            {`Welcome ${user.name}!`}
+            <Button onClick={logOut} className="offset-m1">Log Out</Button>
+          </>
         }
       </header>
     );
@@ -23,11 +29,20 @@ class Header extends Component {
 }
 
 Header.propTypes = {
-  user: PropTypes.obj
+  user: PropTypes.obj,
+  logOut: PropTypes.func.isRequired
 };
 
 function mapStateToProps ({ user }) {
   return { user };
 }
 
-export default connect(mapStateToProps)(Header);
+function mapDispatchToProps (dispatch) {
+  return {
+    logOut: () => {
+      dispatch(logOut());
+    }
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

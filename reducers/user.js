@@ -1,4 +1,4 @@
-import { SET_USER } from '../actions/constants';
+import { SET_USER, LOG_OUT } from '../actions/constants';
 
 export default (state = {}, action) => {
   switch (action.type) {
@@ -12,7 +12,9 @@ export default (state = {}, action) => {
         name,
         id
       };
+    case LOG_OUT:
+      return {};
     default:
-      return state;
+      return {};
   }
 };

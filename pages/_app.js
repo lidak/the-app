@@ -1,6 +1,7 @@
 import App, { Container } from 'next/app';
 import React from 'react';
 import { Provider } from 'react-redux';
+import Head from 'next/head';
 
 import store from '../store';
 
@@ -16,6 +17,9 @@ export default class MyApp extends App {
     return (
       <Container>
         <Provider store={store}>
+          <Head>
+            <meta name="viewport" content="width=device-width, initial-scale=1" />
+          </Head>
           <Component {...pageProps} />
         </Provider>
       </Container>

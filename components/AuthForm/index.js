@@ -30,6 +30,7 @@ class AuthForm extends Component {
   }
 
   submitForm = (isRegister) => {
+    debugger
     const {
       name,
       password
@@ -77,17 +78,44 @@ class AuthForm extends Component {
     } = this.state;
 
     return (
-      <form>
-        <input type="text" value={name} onChange={this.onNameChange} name="name"/>
-        <input type="password" value={password} onChange={this.onPasswordChange} name="password"/>
-        <Button waves='light' large className='red' onClick={this.submitForm.bind(this, true)}>
-          Sign Up
+      <div className="row">
+        <div className="input-field col s12 m6">
+          <input
+            type="text"
+            value={name}
+            onChange={this.onNameChange}
+            id="name"
+            className="validate"
+          />
+          <label htmlFor="name">Name</label>
+        </div>
+        <div className="input-field col s12 m6">
+          <input
+            type="password"
+            value={password}
+            onChange={this.onPasswordChange}
+            id="password"
+            className="validate"
+          />
+          <label htmlFor="password">
+            Password
+          </label>
+        </div>
+        <Button
+          waves="light"
+          className="col s12 m2 offset-m7"
+          onClick={this.submitForm.bind(this, true)}
+        >
+          Register
         </Button>
-        <Button type="button" onClick={this.submitForm.bind(this, false)}>
-          Sign In
+        <Button
+          className="col s12 m2 offset-m1"
+          onClick={this.submitForm.bind(this, false)}
+        >
+          Log In
         </Button>
         <Message type={messageType} message={messageText}/>
-      </form>
+      </div>
     );
   }
 }

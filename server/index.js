@@ -4,8 +4,7 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 
 const dev = process.env.NODE_ENV !== 'production';
-console.log(`process.env.PORT ${process.env.PORT}`);
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 3000;
 const app = next({ dev });
 
 const handle = app.getRequestHandler();
