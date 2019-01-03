@@ -7,6 +7,11 @@ import { Button } from 'react-materialize';
 import { logOut } from '../../../../actions/actionCreators';
 
 class Header extends Component {
+  static propTypes = {
+    user: PropTypes.object,
+    logOut: PropTypes.func.isRequired
+  };
+
   render () {
     const { user, logOut } = this.props;
 
@@ -28,14 +33,9 @@ class Header extends Component {
   }
 }
 
-Header.propTypes = {
-  user: PropTypes.obj,
-  logOut: PropTypes.func.isRequired
-};
-
-function mapStateToProps ({ user }) {
+const mapStateToProps = ({ user }) => {
   return { user };
-}
+};
 
 function mapDispatchToProps (dispatch) {
   return {

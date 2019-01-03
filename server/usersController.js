@@ -14,9 +14,8 @@ router.post('/sign-up', (req, res, next) => {
   })
     .then(() => res.json({ status: 'OK' }))
     .catch((err) => {
-      console.log(err)
-      if (err === `Username ${name} is already taken`) {
-        res.status(400).send({ error: err });
+      if (err.message === `Username ${name} is already taken`) {
+        res.status(400).send({ error: err.message });
       } else {
         next(err);
       }
@@ -34,11 +33,11 @@ router.post('/sign-in', (req, res, next) => {
     password
   })
     .then((userId) => res.json({ userId }))
-    .catch((err) => {
-      if (err === `Username ${name} does not exist.` || 'The password is wrong') {
-        res.status(400).send({ error: err });
+    .catch((error) => {
+      if (error.message === `Username ${name} does not exist.` || 'The password is wrong') {
+        res.status(400).send({ error: error.message });
       } else {
-        next(err);
+        next(error);
       }
     });
 });

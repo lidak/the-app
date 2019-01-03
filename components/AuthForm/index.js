@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import cn from 'class-names';
 
 import { setUser } from '../../actions/actionCreators';
 import Message from '../Message';
-import { Button } from 'react-materialize';
+import { Col, Row, Button, Input } from 'react-materialize';
+
+import './style.styl';
 
 class AuthForm extends Component {
   constructor () {
@@ -15,6 +19,10 @@ class AuthForm extends Component {
       messageText: '',
       userId: null
     };
+  }
+
+  setTextInputRef = element => {
+    this.textInput = element;
   }
 
   onNameChange = (e) => {
@@ -30,7 +38,6 @@ class AuthForm extends Component {
   }
 
   submitForm = (isRegister) => {
-    debugger
     const {
       name,
       password
@@ -69,6 +76,21 @@ class AuthForm extends Component {
     })();
   }
 
+  isNameValid () {
+    const { name } = this.state;
+    return name.length && name.match(/^.{2,}@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/);
+  }
+
+  isPasswordValid () {
+    const { password } = this.state;
+
+    return password.match(/(?=.*[a-zA-Z])(?=.*[0-9])(?=.{8,})/);
+  }
+
+  isFormValid () {
+    return this.isNameValid() && this.isPasswordValid();
+  }
+
   render () {
     const {
       name,
@@ -78,47 +100,57 @@ class AuthForm extends Component {
     } = this.state;
 
     return (
-      <div className="row">
-        <div className="input-field col s12 m6">
-          <input
-            type="text"
+      <>
+        <Row>
+          <Input
+            type="email"
             value={name}
             onChange={this.onNameChange}
-            id="name"
-            className="validate"
+            className={cn(this.isNameValid() ? 'valid' : 'invalid', 'form-input')}
+            label="email"
+            s={12}
+            m={6}
           />
-          <label htmlFor="name">Name</label>
-        </div>
-        <div className="input-field col s12 m6">
-          <input
+          <Input
             type="password"
             value={password}
             onChange={this.onPasswordChange}
-            id="password"
-            className="validate"
+            label="password"
+            className={this.isPasswordValid() ? 'valid' : 'invalid'}
+            s={12}
+            m={6}
           />
-          <label htmlFor="password">
-            Password
-          </label>
-        </div>
-        <Button
-          waves="light"
-          className="col s12 m2 offset-m7"
-          onClick={this.submitForm.bind(this, true)}
-        >
-          Register
-        </Button>
-        <Button
-          className="col s12 m2 offset-m1"
-          onClick={this.submitForm.bind(this, false)}
-        >
-          Log In
-        </Button>
-        <Message type={messageType} message={messageText}/>
-      </div>
+        </Row>
+        <Row>
+          <Col s={12} offset="m6" m={3}>
+            <Button
+              waves="light"
+              onClick={this.submitForm.bind(this, true)}
+              className="button"
+              disabled={!this.isFormValid()}
+            >
+              Register
+            </Button>
+          </Col>
+          <Col s={12} m={3}>
+            <Button
+              onClick={this.submitForm.bind(this, false)}
+              disabled={!this.isFormValid()}
+              className="button"
+            >
+              Log In
+            </Button>
+          </Col>
+          <Message type={messageType} message={messageText}/>
+        </Row>
+      </>
     );
   }
 }
+
+AuthForm.propTypes = {
+  setUser: PropTypes.func.isRequired
+};
 
 function mapDispatchToProps (dispatch) {
   return {

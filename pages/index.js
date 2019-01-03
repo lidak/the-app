@@ -1,18 +1,24 @@
 import './home.styl';
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import 'isomorphic-unfetch';
 
 import LiabilityItem from '../components/LiablilityItem';
-import Index from '../components/AddLiability';
+import AddLiability from '../components/AddLiability';
 import Layout from '../components/Layout';
 
-export default class HomePage extends Component {
+class HomePage extends Component {
+  static propTypes = {
+    user: PropTypes.object
+  };
+
   constructor () {
     super();
     this.state = {
       liabilities: []
     };
-  }
+  };
 
   addLiability = ({ title, amount }) => {
     const {
@@ -22,7 +28,7 @@ export default class HomePage extends Component {
     liabilities.push({ title, amount });
 
     this.setState({ liabilities });
-  }
+  };
 
   removeLiability (title) {
     const liabilityToRemoveIndex = this.state.liabilities.indexOf(
@@ -34,12 +40,14 @@ export default class HomePage extends Component {
     this.setState({
       liabilities: this.state.liabilities
     });
-  }
+  };
 
   render () {
     const {
       liabilities
     } = this.state;
+
+    const { user } = this.props;
 
     return (
       <Layout>
@@ -61,13 +69,25 @@ export default class HomePage extends Component {
           </ul>
         }
         {
-          !liabilities.length &&
-          <div>
-            You must be a happy person. You don't have any liabilities.
-          </div>
+          user.name && user.name.length &&
+          <>
+            {
+              !liabilities.length &&
+              <div>
+                You must be a happy person. You don't have any liabilities.
+              </div>
+            }
+            <AddLiability save={this.addLiability} />
+          </>
         }
-        <Index save={this.addLiability} />
+
       </Layout>
     );
   }
 }
+
+const mapStateToProps = ({ user }) => ({
+  user
+});
+
+export default connect(mapStateToProps)(HomePage);

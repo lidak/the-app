@@ -23,7 +23,7 @@ module.exports = class UsersDB {
     const { name } = userParam;
 
     if (await this.accounts.findOne({ name })) {
-      throw `Username ${name} is already taken`;
+      throw new Error(`Username ${name} is already taken`);
     }
 
     await this.accounts.insertOne(userParam);
@@ -36,10 +36,10 @@ module.exports = class UsersDB {
     } = userParam;
     const user = await this.accounts.findOne({ name });
 
-    if (!user.name) {
-      throw `Username ${name} does not exist.`;
+    if (!user) {
+      throw new Error(`Username ${name} does not exist.`);
     } else if (user.password !== password) {
-      throw 'The password is wrong';
+      throw new Error('The password is wrong');
     }
 
     return user.id;

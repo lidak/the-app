@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
+import { Button } from 'react-materialize';
+import PropTypes from 'prop-types';
 
-export default class Index extends Component {
+export default class AddLiability extends Component {
+  static propTypes = {
+    save: PropTypes.func
+  }
+
   constructor () {
     super();
     this.state = {
@@ -42,7 +48,7 @@ export default class Index extends Component {
 
     return (
       <div className="add-liability">
-        <button onClick={this.addClicked}>Add</button>
+        <Button onClick={this.addClicked}>Add</Button>
         <input
           type="text"
           onChange={this.changeTitle}
