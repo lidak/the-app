@@ -231,11 +231,13 @@ function (_Component) {
       }, "Add"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         onChange: this.changeTitle,
-        value: title
+        value: title,
+        placeholder: "Liability title"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "number",
         value: amount,
-        onChange: this.changeAmount
+        onChange: this.changeAmount,
+        placeholder: "Amount"
       }));
     }
   }]);
@@ -696,6 +698,7 @@ __webpack_require__.r(__webpack_exports__);
     onClick: removeClicked.bind(null, title)
   }, "Remove"));
 });
+"";
 
 /***/ }),
 

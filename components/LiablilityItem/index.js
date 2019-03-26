@@ -7,3 +7,4 @@ export default ({ title, amount, removeClicked }) => (
     <button onClick={removeClicked.bind(null, title)}>Remove</button>
   </div>
 );
+``

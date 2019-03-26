@@ -19,13 +19,13 @@ export default class AddLiability extends Component {
     this.setState({
       title: e.target.value
     });
-  }
+  };
 
   changeAmount = (e) => {
     this.setState({
       amount: e.target.value
     });
-  }
+  };
 
   addClicked = () => {
     const { save } = this.props;
@@ -38,7 +38,7 @@ export default class AddLiability extends Component {
       title,
       amount
     });
-  }
+  };
 
   render () {
     const {
@@ -53,11 +53,13 @@ export default class AddLiability extends Component {
           type="text"
           onChange={this.changeTitle}
           value={title}
+          placeholder="Liability title"
         />
         <input
           type="number"
           value={amount}
           onChange={this.changeAmount}
+          placeholder="Amount"
         />
       </div>
     );
