@@ -4,15 +4,19 @@
 /*!******************************!*\
   !*** ./actions/constants.js ***!
   \******************************/
-/*! exports provided: SET_USER, LOG_OUT */
+/*! exports provided: SET_USER, LOG_OUT, SAVE_LIABILITY, DELETE_LIABILITY */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SET_USER", function() { return SET_USER; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LOG_OUT", function() { return LOG_OUT; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SAVE_LIABILITY", function() { return SAVE_LIABILITY; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DELETE_LIABILITY", function() { return DELETE_LIABILITY; });
 var SET_USER = 'SET_USER';
 var LOG_OUT = 'LOG_OUT';
+var SAVE_LIABILITY = 'SAVE_LIABILITY';
+var DELETE_LIABILITY = 'DELETE_LIABILITY';
 
 /***/ }),
 
@@ -24374,11 +24378,54 @@ function (_App) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
 /* harmony import */ var _user__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./user */ "./reducers/user.js");
+/* harmony import */ var _liabilities__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./liabilities */ "./reducers/liabilities.js");
+
 
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(redux__WEBPACK_IMPORTED_MODULE_0__["combineReducers"])({
-  user: _user__WEBPACK_IMPORTED_MODULE_1__["default"]
+  user: _user__WEBPACK_IMPORTED_MODULE_1__["default"],
+  liabilities: _liabilities__WEBPACK_IMPORTED_MODULE_2__["default"]
 }));
+
+/***/ }),
+
+/***/ "./reducers/liabilities.js":
+/*!*********************************!*\
+  !*** ./reducers/liabilities.js ***!
+  \*********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _actions_constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/constants */ "./actions/constants.js");
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
+
+function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
+
+
+/* harmony default export */ __webpack_exports__["default"] = (function () {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+  var action = arguments.length > 1 ? arguments[1] : undefined;
+
+  switch (action.type) {
+    case _actions_constants__WEBPACK_IMPORTED_MODULE_0__["SAVE_LIABILITY"]:
+      return [].concat(_toConsumableArray(state), [action.payload]);
+
+    case _actions_constants__WEBPACK_IMPORTED_MODULE_0__["DELETE_LIABILITY"]:
+      var filteredLiabilities = state.filter(function (liability) {
+        return liability.title !== action.payload.title;
+      });
+      return _toConsumableArray(filteredLiabilities);
+
+    default:
+      return state;
+  }
+});
 
 /***/ }),
 
@@ -24411,7 +24458,7 @@ __webpack_require__.r(__webpack_exports__);
       return {};
 
     default:
-      return {};
+      return state;
   }
 });
 
@@ -24428,11 +24475,11 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
 /* harmony import */ var _reducers_index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../reducers/index */ "./reducers/index.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(redux__WEBPACK_IMPORTED_MODULE_0__["createStore"])(_reducers_index__WEBPACK_IMPORTED_MODULE_1__["default"], {
-  user: {}
-}));
+
+/* harmony default export */ __webpack_exports__["default"] = (Object(redux__WEBPACK_IMPORTED_MODULE_0__["createStore"])(_reducers_index__WEBPACK_IMPORTED_MODULE_1__["default"], (typeof window === "undefined" ? "undefined" : _typeof(window)) === 'object' && window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()));
 
 /***/ }),
 

@@ -15,6 +15,6 @@ export default (state = {}, action) => {
     case LOG_OUT:
       return {};
     default:
-      return {};
+      return state;
   }
 };

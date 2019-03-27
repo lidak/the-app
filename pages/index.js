@@ -7,47 +7,29 @@ import 'isomorphic-unfetch';
 import LiabilityItem from '../components/LiablilityItem';
 import AddLiability from '../components/AddLiability';
 import Layout from '../components/Layout';
+import { saveLiability, deleteLiability } from '../actions/actionCreators';
 
 class HomePage extends Component {
   static propTypes = {
-    user: PropTypes.object
-  };
-
-  constructor () {
-    super();
-    this.state = {
-      liabilities: []
-    };
+    user: PropTypes.object,
+    saveLiability: PropTypes.func,
+    deleteLiability: PropTypes.func,
+    liabilities: PropTypes.arrayOf(PropTypes.shape({
+      title: PropTypes.string,
+      amount: PropTypes.number
+    }))
   };
 
   addLiability = ({ title, amount }) => {
-    const {
-      liabilities
-    } = this.state;
-
-    liabilities.push({ title, amount });
-
-    this.setState({ liabilities });
+    this.props.saveLiability({ title, amount });
   };
 
   removeLiability (title) {
-    const liabilityToRemoveIndex = this.state.liabilities.indexOf(
-      this.state.liabilities.find(item => item.title === title)
-    );
-
-    this.state.liabilities.splice(liabilityToRemoveIndex, 1);
-
-    this.setState({
-      liabilities: this.state.liabilities
-    });
+    this.props.deleteLiability({ title });
   };
 
   render () {
-    const {
-      liabilities
-    } = this.state;
-
-    const { user } = this.props;
+    const { user, liabilities } = this.props;
 
     return (
       <Layout>
@@ -86,8 +68,14 @@ class HomePage extends Component {
   }
 }
 
-const mapStateToProps = ({ user }) => ({
-  user
+const mapStateToProps = ({ user, liabilities }) => ({
+  user,
+  liabilities
 });
 
-export default connect(mapStateToProps)(HomePage);
+const mapDispatchToProps = {
+  saveLiability,
+  deleteLiability
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomePage);

@@ -97,13 +97,15 @@ module.exports =
 /*!***********************************!*\
   !*** ./actions/actionCreators.js ***!
   \***********************************/
-/*! exports provided: setUser, logOut */
+/*! exports provided: setUser, logOut, saveLiability, deleteLiability */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setUser", function() { return setUser; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "logOut", function() { return logOut; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "saveLiability", function() { return saveLiability; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "deleteLiability", function() { return deleteLiability; });
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./constants */ "./actions/constants.js");
 
 var setUser = function setUser(payload) {
@@ -117,6 +119,18 @@ var logOut = function logOut() {
     type: _constants__WEBPACK_IMPORTED_MODULE_0__["LOG_OUT"]
   };
 };
+var saveLiability = function saveLiability(payload) {
+  return {
+    type: _constants__WEBPACK_IMPORTED_MODULE_0__["SAVE_LIABILITY"],
+    payload: payload
+  };
+};
+var deleteLiability = function deleteLiability(payload) {
+  return {
+    type: _constants__WEBPACK_IMPORTED_MODULE_0__["DELETE_LIABILITY"],
+    payload: payload
+  };
+};
 
 /***/ }),
 
@@ -124,15 +138,19 @@ var logOut = function logOut() {
 /*!******************************!*\
   !*** ./actions/constants.js ***!
   \******************************/
-/*! exports provided: SET_USER, LOG_OUT */
+/*! exports provided: SET_USER, LOG_OUT, SAVE_LIABILITY, DELETE_LIABILITY */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SET_USER", function() { return SET_USER; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LOG_OUT", function() { return LOG_OUT; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SAVE_LIABILITY", function() { return SAVE_LIABILITY; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DELETE_LIABILITY", function() { return DELETE_LIABILITY; });
 var SET_USER = 'SET_USER';
 var LOG_OUT = 'LOG_OUT';
+var SAVE_LIABILITY = 'SAVE_LIABILITY';
+var DELETE_LIABILITY = 'DELETE_LIABILITY';
 
 /***/ }),
 
@@ -850,6 +868,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_LiablilityItem__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/LiablilityItem */ "./components/LiablilityItem/index.js");
 /* harmony import */ var _components_AddLiability__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../components/AddLiability */ "./components/AddLiability/index.js");
 /* harmony import */ var _components_Layout__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../components/Layout */ "./components/Layout/index.js");
+/* harmony import */ var _actions_actionCreators__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../actions/actionCreators */ "./actions/actionCreators.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -879,47 +898,43 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
+
 var HomePage =
 /*#__PURE__*/
 function (_Component) {
   _inherits(HomePage, _Component);
 
   function HomePage() {
+    var _getPrototypeOf2;
+
     var _this;
 
     _classCallCheck(this, HomePage);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(HomePage).call(this));
+    for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+      args[_key] = arguments[_key];
+    }
+
+    _this = _possibleConstructorReturn(this, (_getPrototypeOf2 = _getPrototypeOf(HomePage)).call.apply(_getPrototypeOf2, [this].concat(args)));
 
     _defineProperty(_assertThisInitialized(_assertThisInitialized(_this)), "addLiability", function (_ref) {
       var title = _ref.title,
           amount = _ref.amount;
-      var liabilities = _this.state.liabilities;
-      liabilities.push({
+
+      _this.props.saveLiability({
         title: title,
         amount: amount
       });
-
-      _this.setState({
-        liabilities: liabilities
-      });
     });
 
-    _this.state = {
-      liabilities: []
-    };
     return _this;
   }
 
   _createClass(HomePage, [{
     key: "removeLiability",
     value: function removeLiability(title) {
-      var liabilityToRemoveIndex = this.state.liabilities.indexOf(this.state.liabilities.find(function (item) {
-        return item.title === title;
-      }));
-      this.state.liabilities.splice(liabilityToRemoveIndex, 1);
-      this.setState({
-        liabilities: this.state.liabilities
+      this.props.deleteLiability({
+        title: title
       });
     }
   }, {
@@ -927,8 +942,9 @@ function (_Component) {
     value: function render() {
       var _this2 = this;
 
-      var liabilities = this.state.liabilities;
-      var user = this.props.user;
+      var _this$props = this.props,
+          user = _this$props.user,
+          liabilities = _this$props.liabilities;
       return react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement(_components_Layout__WEBPACK_IMPORTED_MODULE_7__["default"], null, liabilities && !!liabilities.length && react__WEBPACK_IMPORTED_MODULE_1___default.a.createElement("ul", null, liabilities.map(function (_ref2) {
         var title = _ref2.title,
             amount = _ref2.amount;
@@ -948,17 +964,29 @@ function (_Component) {
 }(react__WEBPACK_IMPORTED_MODULE_1__["Component"]);
 
 _defineProperty(HomePage, "propTypes", {
-  user: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.object
+  user: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.object,
+  saveLiability: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.func,
+  deleteLiability: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.func,
+  liabilities: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.arrayOf(prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.shape({
+    title: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.string,
+    amount: prop_types__WEBPACK_IMPORTED_MODULE_3___default.a.number
+  }))
 });
 
 var mapStateToProps = function mapStateToProps(_ref3) {
-  var user = _ref3.user;
+  var user = _ref3.user,
+      liabilities = _ref3.liabilities;
   return {
-    user: user
+    user: user,
+    liabilities: liabilities
   };
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(mapStateToProps)(HomePage));
+var mapDispatchToProps = {
+  saveLiability: _actions_actionCreators__WEBPACK_IMPORTED_MODULE_8__["saveLiability"],
+  deleteLiability: _actions_actionCreators__WEBPACK_IMPORTED_MODULE_8__["deleteLiability"]
+};
+/* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_2__["connect"])(mapStateToProps, mapDispatchToProps)(HomePage));
 
 /***/ }),
 
